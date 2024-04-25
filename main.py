@@ -5,6 +5,7 @@ import urllib.request
 import socket
 import concurrent.futures
 
+
 timeout = "3000"
 url = "https://raw.githubusercontent.com/officialputuid/KangProxy/KangProxy/https/https.txt"
 url2 = "https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/http.txt"
@@ -97,11 +98,13 @@ def check_proxy(proxy):
 
 start_time = time.time()
 
-with concurrent.futures.ThreadPoolExecutor() as executor:
+# Увеличение количества потоков до 10
+with concurrent.futures.ThreadPoolExecutor(max_workers=9000) as executor:
     executor.map(check_proxy, proxies)
 
 end_time = time.time()
 print("Time taken: ", end_time - start_time, "seconds")
+
 
 with open("proxies.txt", "w") as f:
     f.writelines(working)
